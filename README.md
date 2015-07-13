@@ -4,8 +4,6 @@ What is this?
 -------------
 This vagrant environment allows you to test the new features of the WPEngine powered plugin called wp-site-migrate that allows you to migrate data from one WordPress infrastructure environment to the other. From staging to production in no time!
 
-Setup
------
 ## Configure WordPress and MySQL
 Don't forget to change the default MySQL database password, WordPress admin username and password. All of this can be done in the bootstrap.sh file under the configuration variables.
 

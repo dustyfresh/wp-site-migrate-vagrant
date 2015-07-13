@@ -30,9 +30,12 @@ admin_user="admin"
 # Admin password config
 admin_pass="password"
 
-debconf-set-selections <<< 'mysql-server mysql-server/root_password wordpress wordpress'
-debconf-set-selections <<< 'mysql-server mysql-server/root_password_again wordpress wordpress'
+debconf-set-selections <<< 'mysql-server mysql-server/root_password password wordpress'
+debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password wordpress'
 apt-get update
+sudo apt-get install --yes node
+sudo apt-get install --yes npm
+sudo npm install -g ngrok
 apt-get -y install mysql-server mysql-client
 apt-get -y install tor proxychains nmap ngrep unzip ngrok-client
 add-apt-repository -y ppa:nginx/stable
@@ -89,7 +92,12 @@ wp core config --path=/var/www/html --dbname="$db_name" --dbuser="$db_user" --db
 wp core install --path=/var/www/html --url="$site_url" --title="$install_name" --admin_user="$admin_user" --admin_email="$admin_email" --admin_password="$admin_pass" --allow-root
 wp plugin install wp-site-migrate --path=/var/www/html --allow-root
 wp plugin activate wp-site-migrate --path=/var/www/html --allow-root
+wp plugin install root-relative-urls --path=/var/www/html --allow-root
+wp plugin activate root-relative-urls --path=/var/www/html --allow-root
 chown -R www-data. /var/www/html
 rm -f /var/www/html/index.nginx-debian.html
 /etc/init.d/nginx restart
 printf "Setup complete!!\n===WP-ADMIN LOGIN INFORMATION===\nUser: admin\nPass: password"
+printf "\n When ready to migrate your site simply run the following command from the current directory: vagrant ssh"
+printf "\n once you have logged in, run: ngrok 80"
+printf "\n (please note that you will need to leave the terminal window open when running the migration using the url provided after running the previous command. Use the ouput url to log in to wp-admin before using the plugin.)"

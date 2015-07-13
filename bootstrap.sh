@@ -30,8 +30,8 @@ admin_user="admin"
 # Admin password config
 admin_pass="password"
 
-debconf-set-selections <<< 'mysql-server mysql-server/root_password password wordpress'
-debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password wordpress'
+debconf-set-selections <<< 'mysql-server mysql-server/root_password wordpress wordpress'
+debconf-set-selections <<< 'mysql-server mysql-server/root_password_again wordpress wordpress'
 apt-get update
 apt-get -y install mysql-server mysql-client
 apt-get -y install tor proxychains nmap ngrep unzip ngrok-client
